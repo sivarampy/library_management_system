@@ -48,12 +48,17 @@ jobs:
         mysql password: ${{ secrets.MYSQL_PASSWORD }} # Required if "mysql user" exists. The password for the "mysql user"
 
     - name: Setup ENV 
-      env:
-        MYSQL_DATABASE: ${{ secrets.MYSQL_DB}}
-        MYSQL_USER: ${{ secrets.MYSQL_USER }}
-        MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-        MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-        MYSQL_PORT: ${{ secrets.MYSQL_PORT}}
+      run: |
+        export MYSQL_DATABASE=${{ secrets.MYSQL_DB}}
+        export MYSQL_USER=${{ secrets.MYSQL_USER }}
+        export MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+        export MYSQL_HOST=${{ secrets.MYSQL_HOST }}
+        export MYSQL_PORT=${{ secrets.MYSQL_PORT}}
+        set MYSQL_DATABASE
+        set MYSQL_USER
+        set MYSQL_PASSWORD
+        set MYSQL_HOST
+        set MYSQL_PORT
 
     - name: Set Django Secret Key 
       run: |
