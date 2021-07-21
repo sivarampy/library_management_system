@@ -61,14 +61,14 @@ jobs:
         #mysql user: ${{ secrets.MYSQL_USER }} # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
         #mysql password: ${{ secrets.MYSQL_PASSWORD }} # Required if "mysql user" exists. The password for the "mysql user"
 
-    - name: Setup ENV 
-      run: |
-        echo "MYSQL_DB=${{ secrets.MYSQL_DB}}" >> $GITHUB_ENV
-        echo "MYSQL_USER=${{ secrets.MYSQL_USER}}" >> $GITHUB_ENV
-        echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD}}" >> $GITHUB_ENV
-        echo "MYSQL_HOST=${{ secrets.MYSQL_HOST}}" >> $GITHUB_ENV
-        echo "MYSQL_PORT=${{ secrets.MYSQL_PORT}}" >> $GITHUB_ENV
-        echo "SECRET_KEY=${{ secrets.SECRET_KEY}}" >> $GITHUB_ENV
+    #- name: Setup ENV 
+      #run: |
+        #echo "MYSQL_DB=${{ secrets.MYSQL_DB}}" >> $GITHUB_ENV
+        #echo "MYSQL_USER=${{ secrets.MYSQL_USER}}" >> $GITHUB_ENV
+        #echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD}}" >> $GITHUB_ENV
+        #echo "MYSQL_HOST=${{ secrets.MYSQL_HOST}}" >> $GITHUB_ENV
+        #echo "MYSQL_PORT=${{ secrets.MYSQL_PORT}}" >> $GITHUB_ENV
+        #echo "SECRET_KEY=${{ secrets.SECRET_KEY}}" >> $GITHUB_ENV
 
     #- name: Run Migrations
       #run: |
@@ -77,6 +77,7 @@ jobs:
     - name: Run Tests
       env:
         DB: ${{ matrix.db }}
+        DB_USER: 'root'
         DB_HOST: 127.0.0.1
         DB_PORT: ${{ matrix.db_port }}  
         DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
