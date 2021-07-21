@@ -55,12 +55,6 @@ jobs:
         export MYSQL_HOST=${{ secrets.MYSQL_HOST }}
         export MYSQL_PORT=${{ secrets.MYSQL_PORT}}
         export SECRET_KEY=${{ secrets.SECRET_KEY }}
-        set MYSQL_DATABASE
-        set MYSQL_USER
-        set MYSQL_PASSWORD
-        set MYSQL_HOST
-        set MYSQL_PORT
-        set SECRET_KEY
 
     - name: Run Migrations
       run: |
