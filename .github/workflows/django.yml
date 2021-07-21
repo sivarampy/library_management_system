@@ -22,7 +22,7 @@ jobs:
         db: [ mysql ]
         python-version: [3.9]
         include:
-          - db: ${{ secrets.MYSQL_DB}}
+          - db: mysql
             db_port: 3306
 
     services:
