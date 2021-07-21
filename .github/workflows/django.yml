@@ -64,24 +64,23 @@ jobs:
     - name: Setup ENV 
       run: |
         echo "SECRET_KEY=${{ secrets.SECRET_KEY}}" >> $GITHUB_ENV
-
-        # echo "MYSQL_DB=${{ secrets.MYSQL_DB}}" >> $GITHUB_ENV
-        # echo "MYSQL_USER=${{ secrets.MYSQL_USER}}" >> $GITHUB_ENV
-        # echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD}}" >> $GITHUB_ENV
-        # echo "MYSQL_HOST=${{ secrets.MYSQL_HOST}}" >> $GITHUB_ENV
-        # echo "MYSQL_PORT=${{ secrets.MYSQL_PORT}}" >> $GITHUB_ENV
+        echo "DB=${{ secrets.MYSQL_DB}}" >> $GITHUB_ENV
+        echo "DB_USER=${{ secrets.MYSQL_USER}}" >> $GITHUB_ENV
+        echo "DB_PASSWORD=${{ secrets.MYSQL_PASSWORD}}" >> $GITHUB_ENV
+        echo "DB_HOST=${{ secrets.MYSQL_HOST}}" >> $GITHUB_ENV
+        echo "DB_PORT=${{ secrets.MYSQL_PORT}}" >> $GITHUB_ENV
 
     #- name: Run Migrations
       #run: |
         #python3 manage.py migrate
 
     - name: Run Tests
-      env:
-        DB: ${{ matrix.db }}
-        DB_USER: 'root'
-        DB_HOST: 127.0.0.1
-        DB_PORT: ${{ matrix.db_port }}  
-        DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+      #env:
+       # DB: ${{ matrix.db }}
+        #DB_USER: 'root'
+        #DB_HOST: 127.0.0.1
+       # DB_PORT: ${{ matrix.db_port }}  
+       # DB_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
       run: |
         python3 manage.py test
     
