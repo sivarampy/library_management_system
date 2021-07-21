@@ -22,7 +22,7 @@ jobs:
         db: [ mysql ]
         python-version: [3.9]
         include:
-          - db: library
+          - db: mysql
             db_port: 3306
 
     services:
@@ -70,9 +70,9 @@ jobs:
         echo "MYSQL_PORT=${{ secrets.MYSQL_PORT}}" >> $GITHUB_ENV
         echo "SECRET_KEY=${{ secrets.SECRET_KEY}}" >> $GITHUB_ENV
 
-    - name: Run Migrations
-      run: |
-        python3 manage.py migrate
+    #- name: Run Migrations
+      #run: |
+        #python3 manage.py migrate
 
     - name: Run Tests
       run: |
