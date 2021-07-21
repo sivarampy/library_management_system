@@ -43,9 +43,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Set Django Secret Key 
-      secret_key: ${{ secrets.DJANGO_SECRET_KEY }}
       run: |
-        export DJANGO_SECRET_KEY=$secret_key
+        export DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}
         set DJANGO_SECRET_KEY
     - name: Check Syntax # check code formatting
       run: pycodestyle --statistics
