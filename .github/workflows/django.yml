@@ -54,14 +54,13 @@ jobs:
         export MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
         export MYSQL_HOST=${{ secrets.MYSQL_HOST }}
         export MYSQL_PORT=${{ secrets.MYSQL_PORT}}
+        export DJANGO_SECRET_KEY=${{ secrets.SECRET_KEY }}
         set MYSQL_DATABASE
         set MYSQL_USER
         set MYSQL_PASSWORD
         set MYSQL_HOST
         set MYSQL_PORT
-
-    - name: Check Syntax # check code formatting
-      run: pycodestyle --statistics
+        set DJANGO_SECRET_KEY
 
     - name: Run Migrations
       run: |
