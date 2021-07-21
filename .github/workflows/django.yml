@@ -19,10 +19,10 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        db: [ library ]
+        db: [ mysql ]
         python-version: [3.9]
         include:
-          - db: library
+          - db: mysql
             db_port: 3306
 
     services:
