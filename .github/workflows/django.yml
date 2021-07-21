@@ -18,8 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
+      env:
+        DB: ${{ secrets.DB }}
       matrix:
-        db: [ ${{ secrets.DB }} ]
+        db: [ DB ]
         python-version: [3.9]
         include:
           - db: ${{ secrets.DB }}
