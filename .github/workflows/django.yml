@@ -18,14 +18,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
-      env:
-        DB: ${{ secrets.DB }}
       matrix:
-        db: [ DB ]
+        db: [ library ]
         python-version: [3.9]
         include:
-          - db: ${{ secrets.DB }}
-            db_port: ${{ secrets.DB_PORT }}
+          - db: library
+            db_port: 3306
 
     services:
       mysql:
