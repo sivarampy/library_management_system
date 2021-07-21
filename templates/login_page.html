@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <head>
+        <title>Login</title>
+    </head>
+
+    <h1 style="text-align: center; padding-top: 8%; color:white; font-size: 30px;">Please Enter your Credentials</h1><br><br>
+
+    <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+        <form method="POST"> {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1" name="email">
+            </div>
+              
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon2" name="pwd">
+            </div>
+            <button class="btn btn-primary me-5" name="login" value="login">Login</button>
+            <a href="{% url 'registration_page' %}" class="btn btn-primary">Register</a>
+        </form>
+    </div>
+
+    
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <head>
+        <title>Home</title>
+    </head>
+
+    <h1 style="text-align: center; color:white; padding-top: 12%; font-size: 60px;">Welcome to library</h1><br> 
+
+    <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+        <a href="{% url 'login_page' %}" class="btn btn-primary btn-lg me-5">Login</a>
+        <a href="{% url 'registration_page' %}" class="btn btn-primary btn-lg">Register</a>
+    </div>
+    
+{% endblock %}

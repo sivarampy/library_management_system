@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <head>
+        <title>Registration</title>
+    </head>
+    
+    <h1 style="text-align: center; padding-top: 8%; color:white; font-size: 30px;">Please register to use our library services</h1><br><br>
+
+    <div style="display: flex; justify-content: center; align-items: center; height: 250px;">
+        <form method="POST"> {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="name">
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon1" name="email">
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon2" name="pwd">
+            </div>
+            <div class="input-group mb-3">
+                <input type="password" class="form-control" placeholder="Confirm Password" aria-describedby="basic-addon1" name="conf_pwd">
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Phone" aria-describedby="basic-addon1" name="phone">
+            </div>
+            <button class="btn btn-primary me-5" name="register" value="register">Register</button>
+            <a href="{% url 'login_page' %}" class="btn btn-primary">Login</a>
+        </form>
+    </div>
+
+{% endblock %}
