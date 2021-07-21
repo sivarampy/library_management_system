@@ -37,15 +37,23 @@ jobs:
     - name: Test Secrets
       run: echo ${{ secrets.MYSQL_USER }}
 
-    - name: Setup MYSQL 
+    - uses: mirromutth/mysql-action@v1.1
+      with:
+        character set server: 'utf8' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+        mysql database: ${{ secrets.MYSQL_DB}} # Optional, default value is "test". The specified database which will be create
+        mysql root password: ${{ secrets.MYSQL_PASSWORD }} # Required if "mysql user" is empty, default is empty. The root superuser password
+        mysql user: ${{ secrets.MYSQL_USER }} # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+        mysql password: ${{ secrets.MYSQL_PASSWORD }} # Required if "mysql user" exists. The password for the "mysql user"
+
+    - name: Setup ENV 
       env:
         MYSQL_DATABASE: ${{ secrets.MYSQL_DB}}
         MYSQL_USER: ${{ secrets.MYSQL_USER }}
         MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE ${{ env.MYSQL_DATABASE }};' -u ${{ env.MYSQL_USER }} -p ${{ env.MYSQL_PASSWORD }}
-        grant all privileges on *.* to '${{ env.MYSQL_USER }}'@'localhost'
+        MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+        MYSQL_PORT: ${{ secrets.MYSQL_PORT}}
 
     - name: Set Django Secret Key 
       run: |
