@@ -1,0 +1,32 @@
+{% extends 'user_pages_base.html' %}
+{% block content %}
+    <head>
+        <title>Librarian</title>
+    </head>
+    
+    <div class="container">
+        <div class="row justify-content-start" style="padding-top: 2%; padding-left: 2%;"> 
+            <div class="col" style="padding-top: 5%;">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header bg-dark fw-bold text-white">
+                        Librarian
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Name</li>
+                        <li class="list-group-item">Email</li>
+                        <li class="list-group-item">Phone</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-6">
+                <form class="row" action="" method="POST">{% csrf_token %}
+                    <label class="mb-2 fw-bold text-primary" for="message">Message</label>
+                    <textarea class="mb-2" name="message"cols="30" rows="10" placeholder="Type your message here"></textarea>
+                    <button class="btn btn-primary btn-sm" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

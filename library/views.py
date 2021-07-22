@@ -16,16 +16,16 @@ def login(request):
                 request.session['logged_in'] = True
                 request.session['user_type'] = res[1]
                 if res[1] == 'student':
-                    return redirect('/MyHomePage/')
+                    return redirect('/HomePage/')
                 else:
-                    return redirect('/MyAdminPage/')
+                    return redirect('/AdminPage/')
         else:
             return render(request,'login_page.html')
     else:
         if request.session.get('user_type') == 'student':
-            return redirect('/MyHomePage/')
+            return redirect('/HomePage/')
         else:
-            return redirect('/MyAdminPage/')
+            return redirect('/AdminPage/')
 
 def registration(request):
     if request.session.get('logged_in',False) == False:
@@ -48,6 +48,18 @@ def registration(request):
             return render(request,'registration_page.html')
     else:
         if request.session.get('user_type') == 'student':
-            return redirect('/MyHomePage/')
+            return redirect('/HomePage/')
         else:
-            return redirect('/MyAdminPage/')
+            return redirect('/AdminPage/')
+
+def user(request):
+    return render(request,'user_home_page.html')
+
+def search_book(request):
+    return render(request,'search_books.html')
+
+def borrowed_books(request):
+    return render(request,'borrowed_books.html')
+
+def user_librarian(request):
+    return render(request,'user_librarian_page.html')

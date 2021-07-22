@@ -1,3 +1,4 @@
+from typing import Counter
 from django.db import connection
 from library import models
 
@@ -25,3 +26,15 @@ def registration_functionality(name,pwd,conf_pwd,email,phone):
                     return 'user already exits'
         else:
             return 'password not matched'
+
+def borrowed_books_by_user(user_id):
+    with connection.cursor() as cursor:
+        cursor.execute('select name,author,')
+        books = cursor.fetchone()
+    return books
+
+def tokens_left_for_user(user_id):
+    with connection.cursor() as cursor:
+        cursor.execute('select tokens_left from users where user_id = %s',[user_id])
+        tokens = cursor.fetchone()
+    return tokens

@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'library_management_system.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-if os.getenv('DJANGO_KEY') == 'DJANGO_LOCAL_KEY':
+if os.getenv('DJANGO_KEY') == 'DJANGO_KEY':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
