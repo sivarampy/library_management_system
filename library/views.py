@@ -58,7 +58,7 @@ def logout(request):
     return redirect('/login/')
 
 
-def user(request):
+def user_home_page(request):
     if request.session.get('logged_in',False) == True:
         user_id = request.session.get('user_id')
         tokens = funtionalities.tokens_left_for_user(user_id)
@@ -104,4 +104,16 @@ def borrow(request):
         return redirect('/login/')
 
 def user_librarian(request):
-    return render(request,'user_librarian_page.html')
+    if request.session.get('logged_in',False) == True:
+        user_id = request.session.get('user_id')
+        details = funtionalities.librarian_details()
+        if request.method == 'POST':
+            text = request.POST.get('message')
+            funtionalities.send_message_to_admin(user_id,text)
+            sent = 1
+            return render(request,'user_librarian_page.html',{'sent':sent})
+        sent = 0
+        return render(request,'user_librarian_page.html',{'details':details,'sent':sent})
+    else:
+        return redirect('/login/')
+    

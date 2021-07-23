@@ -60,3 +60,22 @@ def borrow_book_for_user(book_id,user_id):
         tokens = cursor.fetchone()
         cursor.execute('update users set tokens_left = %s where user_id = %s',[tokens[0]-1,user_id])
     return 
+
+def librarian_details():
+    with connection.cursor() as cursor:
+        cursor.execute('select * from users where user_type = "librarian"')
+        details = cursor.fetchone()
+    return details
+
+def send_message_to_admin(user_id,text):
+    with connection.cursor() as cursor:
+        cursor.execute('select user_name from users where user_id = %s',[user_id])
+        from_ads = cursor.fetchone()
+        cursor.execute('select user_id from users where user_type = "librarian"')
+        admin = cursor.fetchone()
+        cursor.execute('select max(message_id) from messages')
+        m_id = cursor.fetchone()
+        if not m_id[0]:
+            m_id = (0,)
+        cursor.execute('insert into messages (message_id,message,from_ads,to_ads,date_sent) values (%s,%s,%s,%s,sysdate())',[m_id[0]+1,text,from_ads[0],admin[0]])
+    return
