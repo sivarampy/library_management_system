@@ -29,9 +29,15 @@ def registration_functionality(name,pwd,conf_pwd,email,phone):
 
 def borrowed_books_by_user(user_id):
     with connection.cursor() as cursor:
-        cursor.execute('select name,author,')
-        books = cursor.fetchone()
+        cursor.execute('select name,author,price,date_borrowed from books join borrowed_books_data on books.book_id = borrowed_books_data.book_id where borrowed_books_data.user_id = %s',[user_id])
+        books = cursor.fetchall()
     return books
+
+def messages_for_user(user_id):
+    with connection.cursor() as cursor:
+        cursor.execute('select message,from_ads,date_sent from messages where to_ads = %s',[user_id])
+        texts = cursor.fetchall()
+    return texts
 
 def tokens_left_for_user(user_id):
     with connection.cursor() as cursor:

@@ -47,8 +47,8 @@ class Location(models.Model):
 class Messages(models.Model):
     message_id = models.IntegerField(primary_key=True)
     message = models.TextField()
-    from_ads = models.ForeignKey(Users,on_delete= models.DO_NOTHING, db_column='from_ads', related_name='from_address')
-    to_ads = models.ForeignKey(Users,on_delete= models.DO_NOTHING, db_column='to_ads',related_name='to_address')
+    from_ads = models.CharField(max_length=75)
+    to_ads = models.ForeignKey(Users,on_delete= models.DO_NOTHING, db_column='to_ads')
     date_sent = models.DateField()
 
     class Meta:

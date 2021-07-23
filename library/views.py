@@ -59,13 +59,24 @@ def logout(request):
 
 
 def user(request):
-    return render(request,'user_home_page.html')
+    if request.session.get('logged_in',False) == True:
+        user_id = request.session.get('user_id')
+        tokens = funtionalities.tokens_left_for_user(user_id)
+        texts = funtionalities.messages_for_user(user_id)
+        return render(request,'user_home_page.html',{'tokens':tokens,'texts':texts})
+    else:
+        return redirect('/login/')
 
 def search_book(request):
     return render(request,'user_search_books_page.html')
 
 def borrowed_books(request):
-    return render(request,'user_borrowed_books_page.html')
+    if request.session.get('logged_in',False) == True:
+        user_id = request.session.get('user_id')
+        books = funtionalities.borrowed_books_by_user(user_id)
+        return render(request,'user_borrowed_books_page.html',{'books':books})
+    else:
+        return redirect('/login/')
 
 def user_librarian(request):
     return render(request,'user_librarian_page.html')
