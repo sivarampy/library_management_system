@@ -10,5 +10,6 @@ urlpatterns = [
     path('SearchBook/',views.search_book,name='user_search_book'),
     path('BorrowedBooks/',views.borrowed_books,name='borrowed_books'),
     path('librarian/',views.user_librarian,name='user_libraian_page'),
+    path('borrow/',views.borrow,name='borrow'),
     path('logout/',views.logout,name='logout'),
 ]

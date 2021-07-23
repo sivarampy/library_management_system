@@ -1,6 +1,4 @@
-from typing import Counter
 from django.db import connection
-from library import models
 
 
 def login_functionality(email,pwd):
@@ -44,3 +42,21 @@ def tokens_left_for_user(user_id):
         cursor.execute('select tokens_left from users where user_id = %s',[user_id])
         tokens = cursor.fetchone()
     return tokens
+
+def search_book_for_user(entered_key):
+    if entered_key:
+        with connection.cursor() as cursor:
+            cursor.execute('select name,author,price,floor,rack,book_status,books.book_id from books join location on books.book_id = location.book_id where name like %s',['%'+entered_key+'%'])
+            books = cursor.fetchall()
+        return books
+    else:
+        return None
+
+def borrow_book_for_user(book_id,user_id):
+    with connection.cursor() as cursor:
+        cursor.execute('update books set book_status = "borrowed" where book_id = %s',[book_id])
+        cursor.execute('insert into borrowed_books_data values (%s,%s,sysdate())',[book_id,user_id])
+        cursor.execute('select tokens_left from users where user_id = %s',[user_id])
+        tokens = cursor.fetchone()
+        cursor.execute('update users set tokens_left = %s where user_id = %s',[tokens[0]-1,user_id])
+    return 

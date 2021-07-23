@@ -68,13 +68,38 @@ def user(request):
         return redirect('/login/')
 
 def search_book(request):
-    return render(request,'user_search_books_page.html')
+    if request.session.get('logged_in',False) == True:
+        user_id = request.session.get('user_id')
+        tokens = funtionalities.tokens_left_for_user(user_id)[0]
+        if request.method == 'POST':
+            entered_key = request.POST.get('search')
+            request.session['entered_key'] = entered_key
+            books = funtionalities.search_book_for_user(entered_key)
+            return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
+        elif request.session.get('entered_key',None):
+            entered_key = request.session.get('entered_key')
+            books = funtionalities.search_book_for_user(entered_key)
+            return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
+        else:
+            return render(request,'user_search_books_page.html')
+    else:
+        return redirect('/login/')
 
 def borrowed_books(request):
     if request.session.get('logged_in',False) == True:
         user_id = request.session.get('user_id')
         books = funtionalities.borrowed_books_by_user(user_id)
         return render(request,'user_borrowed_books_page.html',{'books':books})
+    else:
+        return redirect('/login/')
+
+def borrow(request):
+    if request.session.get('logged_in',False) == True:
+        user_id = request.session.get('user_id')
+        if request.method == 'POST':
+            book_id = request.POST.get('borrow')
+            funtionalities.borrow_book_for_user(book_id,user_id)
+        return redirect('/SearchBook/')
     else:
         return redirect('/login/')
 
