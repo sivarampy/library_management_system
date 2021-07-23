@@ -83,6 +83,7 @@ class Books(models.Model):
     price = models.IntegerField(db_column='Price', blank=True, null=True)  # Field name made lowercase.
     year = models.IntegerField(db_column='Year', blank=True, null=True)  # Field name made lowercase.
     genre = models.CharField(db_column='Genre', max_length=11, blank=True, null=True)  # Field name made lowercase.
+    book_status = models.CharField(max_length=20)
 
     class Meta:
         managed = False
@@ -151,6 +152,18 @@ class Location(models.Model):
     class Meta:
         managed = False
         db_table = 'location'
+
+
+class Messages(models.Model):
+    message_id = models.AutoField(primary_key=True)
+    message = models.TextField()
+    from_ads = models.ForeignKey('Users', models.DO_NOTHING, db_column='from_ads')
+    to_ads = models.ForeignKey('Users', models.DO_NOTHING, db_column='to_ads')
+    date_sent = models.DateField()
+
+    class Meta:
+        managed = False
+        db_table = 'messages'
 
 
 class Users(models.Model):
