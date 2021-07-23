@@ -52,14 +52,20 @@ def registration(request):
         else:
             return redirect('/AdminPage/')
 
+def logout(request):
+    if request.method == 'POST':
+        request.session.flush()
+    return redirect('/login/')
+
+
 def user(request):
     return render(request,'user_home_page.html')
 
 def search_book(request):
-    return render(request,'search_books.html')
+    return render(request,'user_search_books_page.html')
 
 def borrowed_books(request):
-    return render(request,'borrowed_books.html')
+    return render(request,'user_borrowed_books_page.html')
 
 def user_librarian(request):
     return render(request,'user_librarian_page.html')

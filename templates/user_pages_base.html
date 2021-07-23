@@ -27,7 +27,7 @@
                         <a class="nav-link fw-bold text-white" href="{% url 'borrowed_books' %}">Borrowed Books</a>
                     </li>
                 </ul>
-                <form action="" method="POST" class="d-flex">{% csrf_token %}
+                <form action="/logout/" method="POST" class="d-flex">{% csrf_token %}
                     <button class="btn btn-primary" name="logout" value="logout" >Logout</button>
                 </form>
             </div>
