@@ -18,13 +18,19 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link fw-bold text-white" href="#">Search Books</a>
+                        <a class="nav-link fw-bold text-white" href="#">Books</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link fw-bold text-white" href="#">Librarian</a>
+                        <a class="nav-link fw-bold text-white" href="#">Users</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link fw-bold text-white" href="{% url 'admin_add_book_page' %}">Add Books</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link fw-bold text-white" href="#">Place</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-bold text-white" href="#">Borrowed Books</a>
+                        <a class="nav-link fw-bold text-white" href="#">Push Notifications</a>
                     </li>
                 </ul>
                 <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>

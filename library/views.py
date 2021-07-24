@@ -74,17 +74,9 @@ def search_book(request):
         if request.session.get('user_type') == 'student':
             user_id = request.session.get('user_id')
             tokens = funtionalities.tokens_left_for_user(user_id)[0]
-            if request.method == 'POST':
-                entered_key = request.POST.get('search')
-                request.session['entered_key'] = entered_key
-                books = funtionalities.search_book_for_user(entered_key)
-                return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
-            elif request.session.get('entered_key',None):
-                entered_key = request.session.get('entered_key')
-                books = funtionalities.search_book_for_user(entered_key)
-                return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
-            else:
-                return render(request,'user_search_books_page.html')
+            entered_key = request.POST.get('search')
+            books = funtionalities.search_book_for_user(entered_key)
+            return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
         else:
             return redirect('/logout/')
     else:
@@ -121,9 +113,12 @@ def user_librarian(request):
             details = funtionalities.librarian_details()
             if request.method == 'POST':
                 text = request.POST.get('message')
-                funtionalities.send_message_to_admin(user_id,text)
-                sent = 1
-                return render(request,'user_librarian_page.html',{'sent':sent})
+                status = funtionalities.send_message_to_admin(user_id,text)
+                if status == 'incomplete':
+                    return redirect('/librarian/')
+                else:
+                    sent = 1
+                    return render(request,'user_librarian_page.html',{'sent':sent})
             sent = 0
             return render(request,'user_librarian_page.html',{'details':details,'sent':sent})
         else:
@@ -138,6 +133,34 @@ def admin_home_page(request):
             user_id = request.session.get('user_id')
             texts = funtionalities.messages_for_user(user_id)
             return render(request,'admin_home_page.html',{'texts':texts})
+        else:
+            return redirect('/logout/')
+    else:
+        return redirect('/login/')
+
+def admin_add_book(request):
+    if request.session.get('logged_in',False) == True:
+        if request.session.get('user_type') == 'librarian':
+            user_id = request.session.get('user_id')
+            if request.method == 'POST':
+                details = []
+                details.append(request.POST.get('name'))
+                details.append(request.POST.get('author'))
+                details.append(request.POST.get('rating'))
+                details.append(request.POST.get('reviews'))
+                details.append(request.POST.get('price'))
+                details.append(request.POST.get('year'))
+                details.append(request.POST.get('genre'))
+                details.append('not present')
+                print(details)
+                status = funtionalities.add_book(details)
+                if status == 'incomplete':
+                    return redirect('/AddBook/')
+                else:
+                    sent = 1
+                    return render(request,'admin_add_book_page.html',{'sent':sent})
+            sent = 0
+            return render(request,'admin_add_book_page.html',{'sent':sent})
         else:
             return redirect('/logout/')
     else:

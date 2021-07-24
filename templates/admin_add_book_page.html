@@ -1,0 +1,64 @@
+{% extends 'admin_pages_base.html' %}
+{% block content %}
+    <head>
+        <title>AddBook</title>
+    </head>
+    {% if sent == 0 %}
+        <div class="card " style="padding-left: 2%; padding-right: 2%; padding-top: 2%;">
+            <div class="card-body">
+                <h5 class="card-title fw-bold text-primary text-decoration-underline" style="padding-left: 2%;">Add Book</h5><br>
+
+                <form action="" method="POST">{% csrf_token %}
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">Book Name</span>
+                        <input name="name" type="text" class="form-control" placeholder="Harry Potter" aria-label="name" aria-describedby="addon-wrapping">
+                    </div>
+        
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">Author</span>
+                        <input name="author" type="text" class="form-control" placeholder="J.K. Rowling" aria-label="author" aria-describedby="addon-wrapping">
+                    </div>
+        
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">User Rating</span>
+                        <input name="rating" type="text" class="form-control" placeholder="4.7/5" aria-label="rating" aria-describedby="addon-wrapping">
+                    </div>
+        
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">Reviews</span>
+                        <input name="reviews" type="text" class="form-control" placeholder="21424" aria-label="reviews" aria-describedby="addon-wrapping">
+                    </div>
+                    
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">Price</span>
+                        <input name="price" type="text" class="form-control" placeholder="30" aria-label="price" aria-describedby="addon-wrapping">
+                    </div>
+        
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">Year</span>
+                        <input name="year" type="text" class="form-control" placeholder="2016" aria-label="year" aria-describedby="addon-wrapping">
+                    </div>
+        
+                    <div class="input-group flex-nowrap mb-3" style="width: 30%; padding-left: 2%">
+                        <span class="input-group-text" id="addon-wrapping">Genre</span>
+                        <input name="genre" type="text" class="form-control" placeholder="Fiction" aria-label="genre" aria-describedby="addon-wrapping">
+                    </div>
+
+                    <div class="input-group flex-nowrap mb-3" style="padding-left: 2%">
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+    {% else %}
+        <div class="card " style="padding-left: 2%; padding-right: 2%; padding-top: 2%;">
+            <div class="card-body">
+                <div class="card mb-3 border-0" style="height: 2rem; padding-left: 2%;">
+                    <p class="card-text fw-bold text-success align-text: center;">Book added</p> 
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

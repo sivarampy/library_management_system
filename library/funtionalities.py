@@ -46,13 +46,15 @@ def tokens_left_for_user(user_id):
     return tokens
 
 def search_book_for_user(entered_key):
-    if entered_key:
-        with connection.cursor() as cursor:
+    with connection.cursor() as cursor:
+        if entered_key:
             cursor.execute('select name,author,price,floor,rack,book_status,books.book_id from books join location on books.book_id = location.book_id where name like %s',['%'+entered_key+'%'])
             books = cursor.fetchall()
-        return books
-    else:
-        return None
+            return books
+        else:
+            cursor.execute('select name,author,price,floor,rack,book_status,books.book_id from books join location on books.book_id = location.book_id')
+            books = cursor.fetchall()
+            return books
 
 def borrow_book_for_user(book_id,user_id):
     with connection.cursor() as cursor:
@@ -70,6 +72,8 @@ def librarian_details():
     return details
 
 def send_message_to_admin(user_id,text):
+    if text == '':
+        return 'incomplete'
     with connection.cursor() as cursor:
         cursor.execute('select user_name from users where user_id = %s',[user_id])
         from_ads = cursor.fetchone()
@@ -80,4 +84,17 @@ def send_message_to_admin(user_id,text):
         if not m_id[0]:
             m_id = (0,)
         cursor.execute('insert into messages (message_id,message,from_ads,to_ads,date_sent) values (%s,%s,%s,%s,sysdate())',[m_id[0]+1,text,from_ads[0],admin[0]])
-    return
+    return 'complete'
+
+def add_book(details):
+    for i in details:
+        if i == '':
+            return 'incomplete'
+    with connection.cursor() as cursor:
+        cursor.execute('select max(book_id) from books')
+        book_id = cursor.fetchone()
+        if not book_id[0]:
+            book_id = (0,)
+        cursor.execute('insert into books values (%s,%s,%s,%s,%s,%s,%s,%s,%s)',[book_id[0]+1]+details)
+    return 'complete'
+
