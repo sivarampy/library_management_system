@@ -18,7 +18,9 @@ def registration_functionality(name,pwd,conf_pwd,email,phone):
             with connection.cursor() as cursor:
                 cursor.execute('select user_type from users where email = %s',[email])
                 res = cursor.fetchone()
-                if res == None:
+                cursor.execute('select user_type from users where user_name = %s',[name])
+                rus = cursor.fetchone()
+                if res == None and rus == None:
                     cursor.execute('insert into users (user_name,email,password,phone) values (%s,%s,%s,%s)',[name,email,pwd,phone])
                 else:
                     return 'user already exits'

@@ -9,7 +9,7 @@
 <body>
     <nav class="navbar sticky-top navbar-dark bg-dark navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'user_home_page' %}">
+            <a class="navbar-brand" href="{% url 'admin_home_page' %}">
                 <img src="/static/library/logo.jpg" alt="" width="100" height="50">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,13 +18,13 @@
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item me-2">
-                        <a class="nav-link fw-bold text-white" href="{% url 'user_search_book' %}">Search Books</a>
+                        <a class="nav-link fw-bold text-white" href="#">Search Books</a>
                     </li>
                     <li class="nav-item me-2">
-                        <a class="nav-link fw-bold text-white" href="{% url 'user_libraian_page' %}">Librarian</a>
+                        <a class="nav-link fw-bold text-white" href="#">Librarian</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link fw-bold text-white" href="{% url 'borrowed_books' %}">Borrowed Books</a>
+                        <a class="nav-link fw-bold text-white" href="#">Borrowed Books</a>
                     </li>
                 </ul>
                 <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>

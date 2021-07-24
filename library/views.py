@@ -53,67 +53,92 @@ def registration(request):
             return redirect('/AdminPage/')
 
 def logout(request):
-    if request.method == 'POST':
-        request.session.flush()
+    request.session.flush()
     return redirect('/login/')
 
 
 def user_home_page(request):
     if request.session.get('logged_in',False) == True:
-        user_id = request.session.get('user_id')
-        tokens = funtionalities.tokens_left_for_user(user_id)
-        texts = funtionalities.messages_for_user(user_id)
-        return render(request,'user_home_page.html',{'tokens':tokens,'texts':texts})
+        if request.session.get('user_type') == 'student':
+            user_id = request.session.get('user_id')
+            tokens = funtionalities.tokens_left_for_user(user_id)
+            texts = funtionalities.messages_for_user(user_id)
+            return render(request,'user_home_page.html',{'tokens':tokens,'texts':texts})
+        else:
+            return redirect('/logout/')
     else:
         return redirect('/login/')
 
 def search_book(request):
     if request.session.get('logged_in',False) == True:
-        user_id = request.session.get('user_id')
-        tokens = funtionalities.tokens_left_for_user(user_id)[0]
-        if request.method == 'POST':
-            entered_key = request.POST.get('search')
-            request.session['entered_key'] = entered_key
-            books = funtionalities.search_book_for_user(entered_key)
-            return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
-        elif request.session.get('entered_key',None):
-            entered_key = request.session.get('entered_key')
-            books = funtionalities.search_book_for_user(entered_key)
-            return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
+        if request.session.get('user_type') == 'student':
+            user_id = request.session.get('user_id')
+            tokens = funtionalities.tokens_left_for_user(user_id)[0]
+            if request.method == 'POST':
+                entered_key = request.POST.get('search')
+                request.session['entered_key'] = entered_key
+                books = funtionalities.search_book_for_user(entered_key)
+                return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
+            elif request.session.get('entered_key',None):
+                entered_key = request.session.get('entered_key')
+                books = funtionalities.search_book_for_user(entered_key)
+                return render(request,'user_search_books_page.html',{'books':books,'tokens':tokens})
+            else:
+                return render(request,'user_search_books_page.html')
         else:
-            return render(request,'user_search_books_page.html')
+            return redirect('/logout/')
     else:
         return redirect('/login/')
 
 def borrowed_books(request):
     if request.session.get('logged_in',False) == True:
-        user_id = request.session.get('user_id')
-        books = funtionalities.borrowed_books_by_user(user_id)
-        return render(request,'user_borrowed_books_page.html',{'books':books})
+        if request.session.get('user_type') == 'student':
+            user_id = request.session.get('user_id')
+            books = funtionalities.borrowed_books_by_user(user_id)
+            return render(request,'user_borrowed_books_page.html',{'books':books})
+        else:
+            return redirect('/logout/')
     else:
         return redirect('/login/')
 
 def borrow(request):
     if request.session.get('logged_in',False) == True:
-        user_id = request.session.get('user_id')
-        if request.method == 'POST':
-            book_id = request.POST.get('borrow')
-            funtionalities.borrow_book_for_user(book_id,user_id)
-        return redirect('/SearchBook/')
+        if request.session.get('user_type') == 'student':
+            user_id = request.session.get('user_id')
+            if request.method == 'POST':
+                book_id = request.POST.get('borrow')
+                funtionalities.borrow_book_for_user(book_id,user_id)
+            return redirect('/SearchBook/')
+        else:
+            return redirect('/logout/')
     else:
         return redirect('/login/')
 
 def user_librarian(request):
     if request.session.get('logged_in',False) == True:
-        user_id = request.session.get('user_id')
-        details = funtionalities.librarian_details()
-        if request.method == 'POST':
-            text = request.POST.get('message')
-            funtionalities.send_message_to_admin(user_id,text)
-            sent = 1
-            return render(request,'user_librarian_page.html',{'sent':sent})
-        sent = 0
-        return render(request,'user_librarian_page.html',{'details':details,'sent':sent})
+        if request.session.get('user_type') == 'student':
+            user_id = request.session.get('user_id')
+            details = funtionalities.librarian_details()
+            if request.method == 'POST':
+                text = request.POST.get('message')
+                funtionalities.send_message_to_admin(user_id,text)
+                sent = 1
+                return render(request,'user_librarian_page.html',{'sent':sent})
+            sent = 0
+            return render(request,'user_librarian_page.html',{'details':details,'sent':sent})
+        else:
+            return redirect('/logout/')
     else:
         return redirect('/login/')
     
+
+def admin_home_page(request):
+    if request.session.get('logged_in',False) == True:
+        if request.session.get('user_type') == 'librarian':
+            user_id = request.session.get('user_id')
+            texts = funtionalities.messages_for_user(user_id)
+            return render(request,'admin_home_page.html',{'texts':texts})
+        else:
+            return redirect('/logout/')
+    else:
+        return redirect('/login/')

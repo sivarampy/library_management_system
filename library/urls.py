@@ -12,4 +12,5 @@ urlpatterns = [
     path('librarian/',views.user_librarian,name='user_libraian_page'),
     path('borrow/',views.borrow,name='borrow'),
     path('logout/',views.logout,name='logout'),
+    path('AdminPage/',views.admin_home_page,name='admin_home_page'),
 ]

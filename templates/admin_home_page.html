@@ -1,4 +1,4 @@
-{% extends 'user_pages_base.html' %}
+{% extends 'admin_pages_base.html' %}
 {% block content %}
     <head>
         <title>HomePage</title>
@@ -7,16 +7,6 @@
     <div class="card " style="padding-left: 2%; padding-right: 2%; padding-top: 2%;">
         <div class="card-body">
             <h5 class="card-title fw-bold text-primary text-decoration-underline" style="padding-left: 2%;">Messages</h5><br>
-
-            {% if tokens.0 > 0 %}
-            <div class="card mb-3 border-0" style="height: 2rem;">
-                <p class="card-text text-success" style="padding-left: 2%;">Tokens left: {{tokens.0}} </p> 
-            </div>
-            {% else %}
-            <div class="card mb-3 border-0" style="height: 2rem;">
-                <p class="card-text text-danger" style="padding-left: 2%;">Tokens left: {{tokens.0}} </p> 
-            </div>
-            {% endif %}
 
             {% if texts %}
             {% for i in texts %}
@@ -33,5 +23,5 @@
 
         </div>
     </div>
-      
+
 {% endblock %}
