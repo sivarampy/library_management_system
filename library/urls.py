@@ -14,4 +14,6 @@ urlpatterns = [
     path('logout/',views.logout,name='logout'),
     path('AdminPage/',views.admin_home_page,name='admin_home_page'),
     path('AddBook/',views.admin_add_book,name='admin_add_book_page'),
+    path('users/',views.admin_users_page,name='admin_users_page'),
+    path('submitted/',views.submitted,name='submit'),
 ]

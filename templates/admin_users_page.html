@@ -1,0 +1,41 @@
+{% extends 'admin_pages_base.html' %}
+{% block content %}
+    <head>
+        <title>Users</title>
+    </head>
+
+    <form class="form-inline" style="align-items: center; padding-top: 1%; padding-left: 2%;" action="/users/" method="POST">{% csrf_token %}
+        <input class="mx-sm-3 mb-2" style="width: 30%;" type="text" name="search" placeholder="User Name">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    {% if users %}
+    <div class="card" style="padding-left: 2%; padding-top: 2%; padding-right: 2%;">
+        <table class="table table-dark table-hover" style="border: 1px solid black; text-align: center; vertical-align: middle; padding: 15px; word-wrap: normal;">
+            <tr>
+                <th>User Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Tokens Left</th>
+                <th>Phone</th>
+                <th>Book Name</th>
+                <th>#</th>
+            </tr>
+            {% for i in users %}
+            <tr>
+                <td>{{i.0}}</td>
+                <td>{{i.1}}</td>
+                <td>{{i.2}}</td>
+                <td>{{i.3}}</td>
+                <td>{{i.4}}</td>
+                <td>{{i.5}}</td>
+                <form action="/submitted/" method="POST">{% csrf_token %}
+                    <td><button class="btn btn-primary btn-sm" type="submit" name="submitted" value={{i.6}}>Submitted</button></td>
+                </form>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+
+{% endblock %}

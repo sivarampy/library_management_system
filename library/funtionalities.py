@@ -86,7 +86,7 @@ def send_message_to_admin(user_id,text):
         cursor.execute('insert into messages (message_id,message,from_ads,to_ads,date_sent) values (%s,%s,%s,%s,sysdate())',[m_id[0]+1,text,from_ads[0],admin[0]])
     return 'complete'
 
-def add_book(details):
+def add_book(details,location):
     for i in details:
         if i == '':
             return 'incomplete'
@@ -96,5 +96,26 @@ def add_book(details):
         if not book_id[0]:
             book_id = (0,)
         cursor.execute('insert into books values (%s,%s,%s,%s,%s,%s,%s,%s,%s)',[book_id[0]+1]+details)
+        cursor.execute('insert into location values (%s,%s,%s)',[book_id[0]+1]+location)
     return 'complete'
 
+def users(user_name):
+    with connection.cursor() as cursor:
+        if user_name:
+            cursor.execute('select users.user_id,user_name,email,tokens_left,phone,books.name,books.book_id from users,books,borrowed_books_data where books.book_id = borrowed_books_data.book_id and users.user_id = borrowed_books_data.user_id and user_name like %s order by user_name',['%'+user_name+'%'])
+            users = cursor.fetchall()
+        else:
+            cursor.execute('select users.user_id,user_name,email,tokens_left,phone,books.name,books.book_id from users,books,borrowed_books_data where books.book_id = borrowed_books_data.book_id and users.user_id = borrowed_books_data.user_id order by user_name')
+            users = cursor.fetchall()
+        return users
+
+def submit(book_id):
+    with connection.cursor() as cursor:
+        cursor.execute('update books set book_status = "not present" where book_id = %s',[book_id])
+        cursor.execute('select user_id from borrowed_books_data where book_id = %s',[book_id])
+        user = cursor.fetchone()
+        cursor.execute('delete from borrowed_books_data where book_id = %s',[book_id])
+        cursor.execute('select tokens_left from users where user_id = %s',[user[0]])
+        tokens = cursor.fetchone()
+        cursor.execute('update users set tokens_left = %s where user_id = %s',[tokens[0]+1,user])
+    return

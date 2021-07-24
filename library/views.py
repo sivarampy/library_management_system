@@ -144,6 +144,7 @@ def admin_add_book(request):
             user_id = request.session.get('user_id')
             if request.method == 'POST':
                 details = []
+                location = []
                 details.append(request.POST.get('name'))
                 details.append(request.POST.get('author'))
                 details.append(request.POST.get('rating'))
@@ -152,8 +153,9 @@ def admin_add_book(request):
                 details.append(request.POST.get('year'))
                 details.append(request.POST.get('genre'))
                 details.append('not present')
-                print(details)
-                status = funtionalities.add_book(details)
+                location.append(request.POST.get('floor'))
+                location.append(request.POST.get('rack'))
+                status = funtionalities.add_book(details,location)
                 if status == 'incomplete':
                     return redirect('/AddBook/')
                 else:
@@ -161,6 +163,29 @@ def admin_add_book(request):
                     return render(request,'admin_add_book_page.html',{'sent':sent})
             sent = 0
             return render(request,'admin_add_book_page.html',{'sent':sent})
+        else:
+            return redirect('/logout/')
+    else:
+        return redirect('/login/')
+
+def admin_users_page(request):
+    if request.session.get('logged_in',False) == True:
+        if request.session.get('user_type') == 'librarian':
+            user_name = request.POST.get('search')
+            users = funtionalities.users(user_name) #users = ((..),)
+            return render(request,'admin_users_page.html',{'users':users})
+        else:
+            return redirect('/logout/')
+    else:
+        return redirect('/login/')
+
+def submitted(request):
+    if request.session.get('logged_in',False) == True:
+        if request.session.get('user_type') == 'librarian':
+            if request.method == 'POST':
+                book_id = request.POST.get('submitted')
+                funtionalities.submit(book_id)
+            return redirect('/users/')
         else:
             return redirect('/logout/')
     else:
